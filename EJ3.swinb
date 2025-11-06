@@ -1,0 +1,74 @@
+<div class="notebook">
+
+<div class="nb-cell program" name="p1">
+transporte(roma, 20).
+transporte(londres, 30).
+transporte(tunez, 10).
+
+alojamiento(roma, hotel, 50).
+alojamiento(roma, hostal, 30).
+alojamiento(roma, camping, 10).
+alojamiento(londres, hotel, 60).
+alojamiento(londres, hostal, 40).
+alojamiento(londres, camping, 20).
+alojamiento(tunez, hotel, 40).
+alojamiento(tunez, hostal, 20).
+alojamiento(tunez, camping, 5).
+
+
+% Crear la regla viaje/4 tal que se cumpla que: "el viaje a una Ciudad durante S semanas con un Hospedaje valido con un Precio total"
+
+viaje(Ciudad, Semanas, Hospedaje, PrecioTot) :-
+    transporte(Ciudad,X),
+    alojamiento(Ciudad,Hospedaje,Y),
+    PrecioTot is X + Semanas*Y.
+    
+    
+%	Completar con viajeeconomico/5, agregando un parámetro extra que defina el Precio máximo del viaje.
+
+
+viajeeconomico(Ciudad,Semanas,Hospedaje,PrecioMax,PrecioTotal) :-
+    transporte(Ciudad,X),
+    alojamiento(Ciudad,Hospedaje,Y),
+    PrecioTotal is X + Semanas * Y,
+    PrecioTotal =&lt; PrecioMax.
+    
+
+%	Utilizando el predicado var/1, intentar definir el precio si Semanas esta definido, sino dejar la expresion planteada.
+
+viaje2(Ciudad,Semanas,Hospedaje,Precio) :-
+    transporte(Ciudad, X),
+    alojamiento(Ciudad, Hospedaje, Y),
+    (	var(Semanas) -&gt;  
+    		Precio = X + Semanas * Y	;
+    		Precio is X + Semanas * Y
+    ).
+
+%	Utilizando el modulo clpfd :- use_module(library(clpfd))., reemplazar el is/2 del punto 1 por el operador #=/2 
+%	y comprobar que pasa si no se tiene información suficiente de las semanas y del precio, y luego comprobar si es 
+%	capaz de predecir las semanas. Nota: #=/2 funciona solo para enteros.
+		
+:- use_module(library(clpfd)).
+
+viaje_clpfd(Ciudad, Semanas, Hospedaje, PrecioTot) :-
+    transporte(Ciudad,X),
+    alojamiento(Ciudad,Hospedaje,Y),
+    PrecioTot #= X + Semanas * Y.
+
+viaje_clpfd_dominio(Ciudad, Semanas, Hospedaje, PrecioTot) :-
+    transporte(Ciudad,X),
+    alojamiento(Ciudad,Hospedaje,Y),
+    Semanas in 0..4,
+    PrecioTot in 0..100,
+    PrecioTot #= X + Semanas * Y.
+
+
+
+    
+</div>
+
+<div class="nb-cell query" name="q1">
+viaje_clpfd(roma,S,hostal,80)
+</div>
+
+</div>
