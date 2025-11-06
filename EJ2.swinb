@@ -1,0 +1,53 @@
+<div class="notebook">
+
+<div class="nb-cell program" name="p1">
+hombre(pedro).
+hombre(manuel).
+hombre(arturo).
+mujer(maría).
+padre(pedro, manuel).
+padre(pedro, arturo).
+padre(pedro, maría).
+
+% expresa que X es hijo o hija de Y.
+hijo(X,Y) :-
+    padre(Y,X).
+
+% expresa que X es un hijo varón de Y.
+hijo2(X,Y) :-
+    padre(Y,X),
+    hombre(X).
+
+% expresa que X es una hija de Y.
+hija(X,Y) :-
+	padre(Y,X),
+   	mujer(X).
+
+% expresa que X es hermano o hermana de Y.
+hermano-o-hermana(X,Y) :-
+    padre(P,X),
+    padre(P,Y),
+    X \== Y.
+
+
+% expresa que X es un hermano de Y.
+hermano(X,Y) :-
+    padre(P,X),
+    padre(P,Y),
+    hombre(X),
+    X \== Y.
+
+% expresa que X es una hermana de Y.
+hermana(X,Y) :-
+    padre(P,X),
+    padre(P,Y),
+    mujer(X),
+    X \== Y.
+
+</div>
+
+<div class="nb-cell query" name="q1">
+hermano(X,Y)
+</div>
+
+</div>
