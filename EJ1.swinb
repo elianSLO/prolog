@@ -1,0 +1,73 @@
+<div class="notebook">
+
+<div class="nb-cell program" name="p1">
+entrada(paella).
+entrada(gazpacho).
+entrada(consomé).
+
+carne('filete de cerdo').
+carne('pollo asado').
+
+pescado(trucha).
+pescado(bacalao).
+
+postre(flan).
+postre(helado).
+postre(pastel).
+
+
+%	¿Cuáles son los menús que ofrece el restaurante? (menu/3) 
+
+menu(E, PP, P) :-
+    entrada(E),
+    (carne(PP); pescado(PP)),
+    postre(P).
+
+%	¿Cuáles son los menús que tienen consomé en las entradas? (menu_con_consomé/3). ¿Sería mejor esta regla con 2 parámetros?
+
+menu_con_consome(consomé,PP,P) :-
+    (carne(PP); pescado(PP)),
+    postre(P).
+
+menu_con_consome(PP,P) :-
+    (carne(PP) ; pescado(PP)),
+    postre(P).
+
+%	¿Cuáles son los menús que no contienen flan como postre? (menu_sin_flan/3)
+menu_sin_flan(E,PP,P) :-
+    entrada(E),
+    (carne(PP) ; pescado(PP)),
+    postre(P),
+    P \= flan.
+
+%	¿Cuáles son los menús que tienen carne como plato principal? (menu_con_carne/3)
+
+menu_carne(E,PP,P) :-
+    entrada(E),
+    carne(PP),
+    postre(P).
+
+%	Completar el programa "menú" de manera que una comida esté formada también por la elección de una bebida, a elegir entre vino, cerveza o agua mineral. (menu/4)
+
+bebida(vino).
+bebida(cerveza).
+bebida(agua).
+
+menu2(B,E,PP,P) :-
+    bebida(B),
+    entrada(E),
+    (carne(PP);pescado(PP)),
+    postre(P).
+
+
+</div>
+
+<div class="nb-cell query" name="q1">
+menu2(T,A,B,C)
+</div>
+
+<div class="nb-cell html" name="htm1">
+
+</div>
+
+</div>
